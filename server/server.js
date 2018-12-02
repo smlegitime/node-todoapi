@@ -7,7 +7,7 @@ const {mongoose} = require(path.join(__dirname, 'db', 'mongoose'));
 const {Todo} = require(path.join(__dirname, 'models', 'todo'));
 const {User} = require(path.join(__dirname, 'models', 'user'));
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const app = express();
 
 app.use(bodyParser.json());
