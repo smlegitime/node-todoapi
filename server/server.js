@@ -1,48 +1,30 @@
-var mongoose = require('mongoose');
+const path = require('path');
+const express = require('express');
+const bodyParser = require('body-parser');
 
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost:27017/TodoApp', {useNewUrlParser: true});
+const {mongoose} = require(path.join(__dirname, 'db', 'mongoose'));
+const {Todo} = require(path.join(__dirname, 'models', 'todo'));
+const {User} = require(path.join(__dirname, 'models', 'user'));
 
-var Todo = mongoose.model('Todo', {
-    text: {
-        type: String,
-        required: true,
-        minlength: 1,
-        trim: true
-    },
-    completed: {
-        type: Boolean,
-        default: false
-    },
-    completedAt: {
-        type: Number,
-        default: null
-    }
+const PORT = 3000;
+const app = express();
+
+app.use(bodyParser.json());
+
+app.post('/todos', (req, res) => {
+    var todo = new Todo({
+        text:req.body.text
+    });
+
+    todo.save()
+    .then((doc) => {
+        res.send(doc);
+    })
+    .catch((e) => {
+        res.status(400).send(e);
+    });
 });
 
-var User = mongoose.model('User', {
-    email: {
-        type: String,
-        required: true,
-        minlength: 1,
-        trim: true
-    }
+app.listen(PORT, () => {
+    console.log(`Started on port ${PORT}`)
 });
-
-var newUser = new User({
-    email: 'smlegitime@live.com'
-});
-
-newUser.save()
-.then( doc => console.log('User created', doc))
-.catch( err => console.error('Unable to save user', err));
-
-var otherTodo = new Todo({
-    text: 'Buy boose',
-    completed: true,
-    completedAt: 123
-});
-
-// otherTodo.save()
-// .then(doc => console.log('Saved todo', doc))
-// .catch( err => console.log('Unable to save todo', err));
