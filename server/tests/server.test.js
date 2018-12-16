@@ -1,10 +1,10 @@
 const path = require('path');
 const expect = require('expect');
 const request = require('supertest');
-const {ObjectID} = require('mongodb');
+const { ObjectID } = require('mongodb');
 
-const {app} = require(path.join(__dirname, '..', 'server'));
-const {Todo} = require(path.join(__dirname, '..', 'models', 'todo'));
+const { app } = require(path.join(__dirname, '..', 'server'));
+const { Todo } = require(path.join(__dirname, '..', 'models', 'todo'));
 
 const todos = [
     { 
