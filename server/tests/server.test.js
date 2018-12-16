@@ -110,9 +110,7 @@ describe('DELETE /todos/:id', () => {
             expect(res.body.todo._id).toBe(hexId)
         })
         .end((err, res) => {
-            if (err) {
-                return done(err)
-            }
+            if (err) return done(err);
 
             Todo.findById(hexId)
             .then(todo => {
