@@ -37,7 +37,7 @@ describe('POST /todos', () => {
         })
         // Checking the db
         .end((err, res) => {
-            if(err) { return done(err); }
+            if(err) return done(err); 
             Todo.find({text}).then(todos => {
                 expect(todos.length).toBe(1);
                 expect(todos[0].text).toBe(text);
