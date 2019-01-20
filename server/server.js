@@ -10,6 +10,7 @@ const { ObjectID } = require('mongodb');
 const { mongoose } = require(path.join(__dirname, 'db', 'mongoose'));
 const { Todo } = require(path.join(__dirname, 'models', 'todo'));
 const { User } = require(path.join(__dirname, 'models', 'user'));
+const { authenticate } = require(path.join(__dirname, 'middleware', 'authenticate'));
 
 const PORT = process.env.PORT;
 const app = express();
@@ -102,6 +103,10 @@ app.post('/users', (req, res) => {
     .then(() => user.generateAuthToken())
     .then(token => res.header('x-auth', token).send(user))
     .catch(err => res.status(400).send(err));
+});
+
+app.get('/users/me', authenticate, (req, res) => {
+    res.send(req.user)
 });
 
 app.listen(PORT, () => {
