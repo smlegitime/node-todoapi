@@ -197,7 +197,7 @@ describe('POST /users', () => {
 
         request(app)
         .post('/users')
-        .send({email, password})
+        .send({ email, password })
         .expect(200)
         .expect(res => {
             expect(res.headers['x-auth']).toBeTruthy();
@@ -207,7 +207,7 @@ describe('POST /users', () => {
         .end(err => {
             if(err) return done(err);
 
-            User.findOne({email})
+            User.findOne({ email })
             .then(user => {
                 expect(user).toBeTruthy();
                 expect(user.password).not.toBe(password);
@@ -222,7 +222,7 @@ describe('POST /users', () => {
 
         request(app)
         .post('/users')
-        .send({email, password})
+        .send({ email, password })
         .expect(400)
         .end(done);
     });
